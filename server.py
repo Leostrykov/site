@@ -290,7 +290,7 @@ def create_news():
                 return render_template('news_edit.html', message='Заполните все поля', news=None,
                                        base_url=os.environ.get('BASE_URL'))
     else:
-        return redirect('/')
+        return render_template('error401.html'), 401
 
 
 # сраница поста
@@ -363,7 +363,7 @@ def edit_news(news_id):
                 return render_template('news_edit.html', message='Заполните все поля', news=news,
                                        base_url=os.environ.get('BASE_URL'))
     else:
-        return render_template('/')
+        return render_template('error401.html'), 401
 
 
 @app.route('/user/<int:user_id>')
