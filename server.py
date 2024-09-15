@@ -290,7 +290,7 @@ def create_news():
                 return render_template('news_edit.html', message='Заполните все поля', news=None,
                                        base_url=os.environ.get('BASE_URL'))
     else:
-        return render_template('error401.html'), 401
+        return redirect('/')
 
 
 # сраница поста
@@ -331,6 +331,17 @@ def news_like(news_id, action):
                 return redirect(f'/news/{news_id}')
 
 
+@app.route('/news/<int:news_id>/delete')
+@login_required
+def news_delete(news_id):
+    db_sess = db_session.create_session()
+    news = db_sess.query(News).filter(News.id == news_id).first()
+    if current_user.is_confirmed and news.user_id == current_user.id:
+        db_sess.delete(news)
+        db_sess.commit()
+        return redirect('/')
+
+
 @app.route('/saved')
 @login_required
 def saved():
@@ -363,7 +374,7 @@ def edit_news(news_id):
                 return render_template('news_edit.html', message='Заполните все поля', news=news,
                                        base_url=os.environ.get('BASE_URL'))
     else:
-        return render_template('error401.html'), 401
+        return render_template('/')
 
 
 @app.route('/user/<int:user_id>')
@@ -437,6 +448,6 @@ if __name__ == '__main__':
     # храним базы данных в папке .data для безопастности данных в glitch
     db_session.global_init('.data/news.db')
     app.register_blueprint(giga_api.blueprint)
-    # app.run()
+    app.run()
     # как оказывается waitress изначально использует один поток, из-за чего когда заходили много людей сервер падал...
-    serve(app, host='0.0.0.0', port=8080, threads=8)
+    # serve(app, host='0.0.0.0', port=8080, threads=8)

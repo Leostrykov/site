@@ -36,7 +36,6 @@ header {
     background-color: #FFFFFF;
     padding: 0 20px;
     align-items: center;
-    border-radius: 0 0 20px 20px;
     border-bottom: #E8E8E8 1px solid;
     box-shadow: #00000025 0 0 10px 0px;
     z-index: 100;
@@ -272,6 +271,11 @@ main {
     border: #E8E8E8 2px solid;
     width: 18.75vw;
     height: fit-content;
+    transition: transform 0.2s ease-in-out;
+}
+
+.post_card:hover {
+    transform: scale(1.05);
 }
 
 .post_image {
