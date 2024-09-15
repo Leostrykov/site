@@ -448,6 +448,6 @@ if __name__ == '__main__':
     # храним базы данных в папке .data для безопастности данных в glitch
     db_session.global_init('.data/news.db')
     app.register_blueprint(giga_api.blueprint)
-    app.run()
+    # app.run()
     # как оказывается waitress изначально использует один поток, из-за чего когда заходили много людей сервер падал...
-    # serve(app, host='0.0.0.0', port=8080, threads=8)
+    serve(app, host='0.0.0.0', port=8080, threads=8)
